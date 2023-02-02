@@ -1,10 +1,11 @@
 import express from 'express';
 import pool from './database';
+import cors from 'cors';
 
 const app: express.Application = express()
 const port:number = 4000
 
-
+app.use(cors());
 app.get('/', (req, res) => {
   res.send('Hello World Pinyator!')
 })
@@ -14,7 +15,7 @@ app.get('/users', async (req, res) => {
   try {
     conn = await pool.getConnection();
     const rows = await conn.query("SELECT * FROM USUARIS");
-    res.send(rows);
+    res.json(rows);
   } catch(err) {
     throw err;
   } finally {
