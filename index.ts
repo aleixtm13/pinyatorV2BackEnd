@@ -23,6 +23,19 @@ app.get('/users', async (req, res) => {
   }
 })
 
+app.get('/castellers', async (req, res) => {
+  let conn;
+  try{
+    conn = await pool.getConnection();
+    const result = await conn.query("SELECT * FROM CASTELLER");
+    res.json(result);
+  } catch(err){
+    throw err;
+  } finally {
+    if(conn) conn.end;
+  }
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
