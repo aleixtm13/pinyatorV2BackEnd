@@ -6,7 +6,8 @@ const pool = mariadb.createPool(
         database: 'pinyator',
         user: 'root',
         password: 'root',
-        connectionLimit: 5
+        connectionLimit: 10,
+        idleTimeout: 0
     }
 )
 

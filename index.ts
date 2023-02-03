@@ -32,7 +32,7 @@ app.get('/castellers', async (req, res) => {
   } catch(err){
     throw err;
   } finally {
-    if(conn) conn.end;
+    if(conn) conn.end();
   }
 })
 
