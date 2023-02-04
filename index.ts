@@ -36,6 +36,15 @@ app.get('/castellers', async (req, res) => {
   }
 })
 
+app.get('/addcasteller', async (req, res) => {
+  res.send('Waiting for input...');
+})
+
+app.post('/addcasteller', async (req,res) => {
+  console.log(req.body);
+  res.send('Data recieved');
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
