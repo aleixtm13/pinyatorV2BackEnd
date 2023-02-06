@@ -76,6 +76,11 @@ app.post('/adduser', async (req, res) => {
   }
 });
 
+app.post('/delete', async (req, res) => {
+  console.log(req.body);
+  res.send('Recieved data.');
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 });
