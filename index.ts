@@ -2,14 +2,15 @@ import express from 'express';
 import pool from './database';
 import cors from 'cors';
 
-const app: express.Application = express()
-const port:number = 4000
+const app: express.Application = express();
+const port:number = 4000;
 
 app.use(cors());
 app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('Hello World Pinyator!')
-})
+});
 
 app.get('/users', async (req, res) => {
   let conn;
@@ -22,7 +23,7 @@ app.get('/users', async (req, res) => {
   } finally {
     if(conn) conn.end();
   }
-})
+});
 
 app.get('/castellers', async (req, res) => {
   let conn;
@@ -35,11 +36,11 @@ app.get('/castellers', async (req, res) => {
   } finally {
     if(conn) conn.end();
   }
-})
+});
 
 app.get('/addcasteller', async (req, res) => {
   res.send('Waiting for input...');
-})
+});
 
 app.post('/addcasteller', async (req,res) => {
   console.log(req.body);
@@ -56,8 +57,25 @@ app.post('/addcasteller', async (req,res) => {
   const insert = await conn.query(insertQuery);
   if(insert) console.log("Inserted data into DB.")
   res.send('Data inserted.');
-})
+});
+
+app.post('/adduser', async (req, res) => {
+  console.log(req.body);
+  const dadesUser = req.body;
+  let conn;
+  conn = await pool.getConnection();
+  const insertQuery = `INSERT INTO USUARIS (nom, password, CARREC, SEGADMIN, SEGCASTELLER, SEGBOSS, SEGCASTELL, SEGEVENT)
+                        VALUES ('${dadesUser.nom}', '${dadesUser.password}', ${dadesUser.carrec}, ${dadesUser.segadmin},
+                        ${dadesUser.segcasteller}, ${dadesUser.segboss}, ${dadesUser.segcastell}, ${dadesUser.segevent})`;
+  const insert = await conn.query(insertQuery);
+  if(insert) {
+    console.log("Inserted data into DB.");
+    res.send("Data inserted correctly.")
+  } else {
+    res.send("Could not insert data.");
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-})
+});

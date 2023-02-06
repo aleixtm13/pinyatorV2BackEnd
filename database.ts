@@ -7,7 +7,6 @@ const pool = mariadb.createPool(
         user: 'root',
         password: 'root',
         connectionLimit: 10,
-        idleTimeout: 0
     }
 )
 
