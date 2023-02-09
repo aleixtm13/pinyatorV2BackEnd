@@ -60,7 +60,6 @@ app.post('/addcasteller', async (req,res) => {
 });
 
 app.post('/adduser', async (req, res) => {
-  console.log(req.body);
   const dadesUser = req.body;
   let conn;
   conn = await pool.getConnection();
@@ -77,8 +76,17 @@ app.post('/adduser', async (req, res) => {
 });
 
 app.post('/delete', async (req, res) => {
-  console.log(req.body);
-  res.send('Recieved data.');
+  const dadesDelete = req.body;
+  let conn = await pool.getConnection();
+  const deleteQuery = `DELETE FROM CASTELLER WHERE Casteller_ID = ${dadesDelete.idCasteller}`;
+  const deleted = await conn.query(deleteQuery);
+  if(deleted){
+    console.log("Deleted data from DB.");
+    res.send("Data deleted correctly");
+  }
+  else{
+    res.send("Could not delete data.");
+  }
 });
 
 app.listen(port, () => {
